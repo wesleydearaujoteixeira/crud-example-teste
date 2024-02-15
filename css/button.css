@@ -25,6 +25,53 @@ button.red{
     box-shadow: inset 200px 0 0 #00000055;
 }
 
+#buttons-Delete {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+
+    
+}
+
+#apagar{
+    background-color: red;
+    font-size: 20px;
+    padding: 9px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+
+#apagar:active{
+    background-color: rgb(238, 75, 53);
+    color: white;
+   
+}
+
+
+
+#cancelar {
+    background-color: blue;
+    font-size: 20px;
+    padding: 9px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+
+
+}
+
+#cancelar:active {
+    background-color: rgb(238, 75, 53);
+    color: white;
+    
+}
+
+
+
+
 @media(max-width:480px){
     .button.mobile{
         color:transparent;

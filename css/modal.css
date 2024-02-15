@@ -36,6 +36,50 @@
     font-size: 1rem;
 }
 
+.modal-header > h2 {
+    color: white;
+
+}
+ 
+
+ .modalDelete {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: #00000090;
+    opacity: 0;
+    z-index: -1;
+
+ }
+
+
+
+ .activeDelete {
+    z-index: 1;
+    opacity: 1;
+
+ }
+
+#modalwhite {
+    width: 40%;
+    height: 25%;
+    background-color: #FFBA00;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2em;
+    border-radius: 2rem;
+    color: white;
+    border: 3px solid black;
+  
+}
+
 
 
 .modal-close{

@@ -57,7 +57,6 @@ function Delete(index) {
 // Verification fields
 
 const isValidField = () => {
-
     return document.getElementById('form').reportValidity()
 
     
@@ -81,20 +80,19 @@ function SaveClient () {
             cidade: document.querySelector('#cidade').value
         }
 
-        const index = document.getElementById('nome').dataset.index
+        const dataindex = document.getElementById('nome').dataset.dataindex
 
-        if(index == 'new'){
+        if(dataindex == 'new'){
             Create(client)
             UpdateTable()
-            closeModal()
             location.reload()
+            closeModal()
 
         }else{
-            Update(index, client.nome, client.email, client.celular, client.cidade)
+            Update(dataindex, client.nome, client.email, client.celular, client.cidade)
             UpdateTable()
-            closeModal()
             location.reload()
-
+            closeModal()
 
         }
 
@@ -104,23 +102,9 @@ function SaveClient () {
     }
 }
 
-function createRow (client, index) {
-    const newRow = document.createElement('tr')
-    newRow.innerHTML = `
 
-    <td>${client.nome}</td>
-    <td>${client.email}</td>
-    <td>${client.celular}</td>
-    <td>${client.cidade}</td>
-    <td>
-        <button type="button" class="button green" id="edit-${index}" > Edit </button>
-        <button type="button" class="button red" id="delete-${index}" > Delete </button>
 
-    `
 
-    document.querySelector('#tableClient > tbody').appendChild(newRow)
-
-}
 
 
 function clearTable() {
@@ -131,7 +115,23 @@ function clearTable() {
 const UpdateTable = () => {
     const valores = Read()
     clearTable()
-    valores.forEach(createRow)
+    valores.forEach((client, index) => {
+        const newRow = document.createElement('tr')
+        newRow.innerHTML = `
+    
+        <td>${client.nome}</td>
+        <td>${client.email}</td>
+        <td>${client.celular}</td>
+        <td>${client.cidade}</td>
+        <td>
+            <button type="button" class="button green" id="edit-${index}" > Edit </button>
+            <button type="button" class="button red" id="delete-${index}" > Delete </button>
+    
+        `
+    
+        document.querySelector('#tableClient > tbody').appendChild(newRow)
+    
+    })
 
 }
 
@@ -143,19 +143,17 @@ function editingFileds (clientes) {
     document.querySelector('#email').value = clientes.email
     document.querySelector('#celular').value = clientes.celular
     document.querySelector('#cidade').value = clientes.cidade
-    document.querySelector('#nome').dataset.index = clientes.index
+    document.querySelector('#nome').dataset.dataindex = clientes.index
 
 }
 
 
 
 function EditClient (index) {
-    const values = Read()[index]
-    values.index = index
-    editingFileds(values)
+    const localStorage = Read()[index]
+    localStorage.index = index
+    editingFileds(localStorage)
     openModal()
-
-
 }
 
 
@@ -168,9 +166,27 @@ const editDelete = (event) => {
             EditClient(index)
 
         } else {
-            console.log('excluindo um post')
-            Delete(index)
-            location.reload();
+            console.log('Excluindo um post')
+            addEventListener('click', (event) => {
+              document.querySelector('.modalDelete').classList.add('activeDelete')
+
+                const person = Read()[index]
+                document.querySelector('#person').textContent = ` Você quer mesmo deletar o cliente ${person.nome} ?`
+
+              document.querySelector('#apagar').addEventListener('click', () => {
+                Delete(index)
+                location.reload()
+              })
+
+              document.querySelector('#cancelar').addEventListener('click', () => {
+                document.querySelector('.modalDelete').classList.remove('activeDelete')
+                location.reload()
+
+              })
+                
+              
+            })
+          
 
         }
         
@@ -185,8 +201,8 @@ UpdateTable()
 
 // Eventos de click
 
-
 document.getElementById('cadastrarCliente').addEventListener('click', openModal)
 document.getElementById('modalClose').addEventListener('click', closeModal)
 document.getElementById('salvar').addEventListener('click', SaveClient)
 document.querySelector('#tableClient > tbody').addEventListener('click', editDelete)
+document.querySelector('#cancelar-info').addEventListener('click', closeModal)
