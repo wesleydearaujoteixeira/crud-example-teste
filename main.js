@@ -57,6 +57,7 @@ function Delete(index) {
 // Verification fields
 
 const isValidField = () => {
+
     return document.getElementById('form').reportValidity()
 
     
@@ -86,13 +87,16 @@ function SaveClient () {
             Create(client)
             UpdateTable()
             closeModal()
+            location.reload()
+
         }else{
             Update(index, client.nome, client.email, client.celular, client.cidade)
-            closeModal()
             UpdateTable()
-        }
+            closeModal()
+            location.reload()
 
-       
+
+        }
 
 
     }else {
@@ -109,8 +113,8 @@ function createRow (client, index) {
     <td>${client.celular}</td>
     <td>${client.cidade}</td>
     <td>
-        <button type="button" class="button green" id="edit-${index}" >editar</button>
-        <button type="button" class="button red" id="delete-${index}" >excluir</button>
+        <button type="button" class="button green" id="edit-${index}" > Edit </button>
+        <button type="button" class="button red" id="delete-${index}" > Delete </button>
 
     `
 
@@ -171,7 +175,7 @@ const editDelete = (event) => {
         }
         
     }else {
-        console.log(' n é um button')
+        console.log('não é um button')
     }
 
 }
